@@ -1,0 +1,14 @@
+.todo_container{
+    margin: 10px;
+    padding: 10px;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    
+}
+
+.todo_not_completed {
+    color: blue;
+    text-decoration-line: line-through;
+    
+}
