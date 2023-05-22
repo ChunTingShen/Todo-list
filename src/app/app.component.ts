@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+// import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { TodoService } from './todo.service';
-import { Todo } from './todo';
+import { Todo } from './todo.model';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +11,15 @@ import { Todo } from './todo';
 })
 export class AppComponent implements OnInit {
   
-  constructor(private todos: TodoService){}
+  constructor(
+    private todos: TodoService,
+    // private store: Store<{ count: number}>
+    ){}
 
 
   todolist:  Todo[] = [];
+  lastId: number = 0;
+
 
 
   ngOnInit(): void {
@@ -22,6 +29,7 @@ export class AppComponent implements OnInit {
         for (let i = 0; i< ele.length; i++){
           this.todolist.push(ele[i])
         }
+        this.lastId = ele.length;
 
       })
 
@@ -44,7 +52,9 @@ export class AppComponent implements OnInit {
 
 
   newTodo(text: string){
+    this.lastId ++;
     
+    this.todolist.push()
   }
 
 }
