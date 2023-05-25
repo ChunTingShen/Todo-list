@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-// import { Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { TodoService } from './todo.service';
 import { Todo } from './todo.model';
+
+import * as TodoActions from './todo.actions';
+import * as TodoSelectors from './todo.selectors';
+
 
 @Component({
   selector: 'app-root',
@@ -12,26 +16,30 @@ import { Todo } from './todo.model';
 export class AppComponent implements OnInit {
   
   constructor(
-    private todos: TodoService,
-    // private store: Store<{ count: number}>
+    // private todos: TodoService,
+    private store: Store
     ){}
 
 
   todolist:  Todo[] = [];
   lastId: number = 0;
 
+  todos!: Observable<Todo[]>;
 
 
   ngOnInit(): void {
-      this.todos.getTodos().subscribe((ele: Todo[])=>{
-        // console.log(ele)
+      // this.todos.getTodos().subscribe((ele: Todo[])=>{
+      //   // console.log(ele)
 
-        for (let i = 0; i< ele.length; i++){
-          this.todolist.push(ele[i])
-        }
-        this.lastId = ele.length;
+      //   for (let i = 0; i< ele.length; i++){
+      //     this.todolist.push(ele[i])
+      //   }
+      //   this.lastId = ele.length;
 
-      })
+      // })
+
+    this.store.dispatch(TodoActions.loadTodo());
+    this.todos = this.store.select(TodoSelectors.selectTodos);
 
   }
 
@@ -45,8 +53,9 @@ export class AppComponent implements OnInit {
   }
 
   deleteTodo(item: Todo){
-    item.id = 0;
-    console.log(item)
+    // item.id = 0;
+    // console.log(item)
+    this.store.dispatch(TodoActions.deleteTodo({id: item.id}))
 
   }
 

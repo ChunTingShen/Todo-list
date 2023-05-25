@@ -2,7 +2,7 @@ Add new todo here:
 <input type="text" />
 <button (click)="newTodo('addsomething')">Enter</button>
 
-<div *ngFor="let ele of todolist">
+<div *ngFor="let ele of todos | async">
   
     <div class="todo_container" *ngIf="ele.id > 0" (click)="todoCheck(ele)"> 
       {{ ele.id }}.
